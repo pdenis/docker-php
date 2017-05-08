@@ -1,0 +1,9 @@
+parameters:
+    snide_docker.repository.node.class: AppBundle\Repository\NodeRepository
+    snide_docker.manager.docker_compose.class: AppBundle\Manager\DockerComposeManager
+
+services:
+    snide_docker.repository.node:
+        class: %snide_docker.repository.node.class%
+        arguments:
+            - "@snide_docker_filesystem"

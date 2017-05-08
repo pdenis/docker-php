@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <table class="table table-striped table-bordered">
+            <caption>Containers</caption>
+            <thead>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </thead>
+
+            <tbody>
+                {% for container in containers %}
+                <tr>
+                    <td>{{ container.names.0|replace({'/': ''}) }}</td>
+                    <td>{{ container.image }}</td>
+                    <td>{{ container.state }} - {{ container.status }}</td>
+                    <td>
+                        <a href="{{  path('snide_docker_container_info', {'id': container.id}) }}">Info</a>
+                        {% if container.state == 'running' %}
+                            | <a href="{{  path('snide_docker_container_stop', {'id': container.id}) }}">Stop</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <table class="table table-striped table-bordered">
+            <caption>Composed containers</caption>
+            <thead>
+            <th>Name</th>
+            <th>Images</th>
+            <th>Actions</th>
+            </thead>
+
+            <tbody>
+            {% for name, containers in composeContainers %}
+                <tr>
+                    <td>{{ name }}</td>
+                    <td>
+                        {% for container in containers %}
+                            {{ container.names.0|replace({'/': ''}) }}<br />
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{  path('snide_docker_container_stop_by_project_name', {'name': name}) }}">Stop</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

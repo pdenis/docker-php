@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <h2>Container {{ container.name|replace({'/': ''}) }}</h2>
+        {% include 'container/info/network.html.twig' with { 'network': container.networkSettings, 'ports': container.networkSettings.ports } %}
+        {% include 'container/info/state_actions.html.twig' with { 'container': container} %}
+        {% include 'container/info/config.html.twig' %}
+        {% include 'container/info/env.html.twig' with { 'envVars': container.config.env } %}
+    </div>
+{% endblock %}
